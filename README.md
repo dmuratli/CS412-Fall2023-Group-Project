@@ -1,12 +1,12 @@
 # Overview of the Repository
 
-This repository encompasses the comprehensive implementation of our machine learning project, focusing on enhancing the understanding of student responses to prompts. Below is a succinct breakdown of the main script and code components embedded within the repository.
+This repository encompasses the comprehensive implementation of our machine learning project, focusing on enhancing the understanding of homework grades based on ChatGPT prompts. Below is a succinct breakdown of the main script and code components embedded within the repository.
 
 ## Data Preprocessing
 The initial phase involves data preprocessing, including NLTK resource download and HTML text cleaning, extracting, and storing preprocessed conversations. The code can be accessed here.
 
 ## Matching Prompts with Questions 
-In this step, we match user prompts with their respective codes, preprocess a set of questions, and prepare them for subsequent analysis. The code can be accessed here.
+In this step, user prompts are matched with their respective codes, preprocess a set of questions, and prepare them for subsequent analysis. The code can be accessed here.
 
 ## TF-IDF Vectorization 
 The subsequent stage involves TF-IDF vectorization on user prompts and questions, calculating cosine similarity, and organizing results into a dataframe (question_mapping_scores). The code can be accessed here.
