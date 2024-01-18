@@ -3,7 +3,7 @@
 This repository encompasses the comprehensive implementation of our machine learning project, focusing on enhancing the understanding of student responses to prompts. Below is a succinct breakdown of the main script and code components embedded within the repository.
 
 ## Data Preprocessing
-The initial phase involves data preprocessing, including NLTK resource download and HTML text cleaning, extracting, and storing preprocessed conversations. The code can be accessed here.
+The initial phase involves data preprocessing, including NLTK resource download and HTML text cleaning, extracting, and storing preprocessed conversations. The code can be accessed [here](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/31c4ec1df9e4a7c220470b4545781e339d193881/deneme.py#L27C1-L40C1).
 
 ## Matching Prompts with Questions 
 In this step, we match user prompts with their respective codes, preprocess a set of questions, and prepare them for subsequent analysis. The code can be accessed here.
