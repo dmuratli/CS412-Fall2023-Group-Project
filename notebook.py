@@ -30,9 +30,10 @@ from sklearn.cluster import KMeans
 from sklearn.neighbors import NearestNeighbors
 
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.wrappers.scikit_learn import KerasRegressor
 
 import nltk
 from nltk.corpus import stopwords
@@ -668,46 +669,48 @@ model_NN_1.add(Dense(128, input_shape=(X_train_normalized.shape[1],), activation
 
 # Hidden layers
 model_NN_1.add(Dense(64, activation='relu'))
+model_NN_1.add(Dropout(0.7))
 
 # Output layer
 model_NN_1.add(Dense(1, activation='linear'))
 
 # Compiling the model
-adam_optimizer = Adam(learning_rate=0.1)
+adam_optimizer = Adam(learning_rate=0.01)
 model_NN_1.compile(optimizer=adam_optimizer, loss='mean_squared_error', metrics=['mae', 'mse'])
 
 # Displaying the model summary
 model_NN_1.summary()
 
-early_stopping = EarlyStopping(monitor='val_loss', patience=3, restore_best_weights=True)
-
 # Training the model with a validation split
 history = model_NN_1.fit(
     X_train_normalized, y_train_normalized,
-    epochs=100,
-    batch_size=10,
+    epochs=500,
+    batch_size=32,
     validation_split=0.20,
-    callbacks=[early_stopping]
+    shuffle=False
 )
 
 normalized_predictions = model_NN_1.predict(X_train_normalized)
 
-# Inverse transform predictions and validation labels
+# Inverse transforming predictions and validation labels
 predictions = scaler.inverse_transform(normalized_predictions)
 y_valid_original = scaler.inverse_transform(y_train_normalized.reshape(-1, 1))
 
-# Calculate MAE and MSE on the original scale
+# Calculating MAE and MSE on the original scale
 training_mae_1 = mean_absolute_error(y_valid_original, predictions)
 training_mse_1 = mean_squared_error(y_valid_original, predictions)
+
+print(f"Mean absolute error: {training_mae_1}")
+print(f"Mean squared error: {training_mse_1}")
 
 
 normalized_predictions = model_NN_1.predict(X_test_normalized)
 
-# Inverse transform predictions and validation labels
+# Inverse transforming predictions and validation labels
 predictions = scaler.inverse_transform(normalized_predictions)
 y_valid_original = scaler.inverse_transform(y_test_normalized.reshape(-1, 1))
 
-# Calculate MAE and MSE on the original scale
+# Calculating MAE and MSE on the original scale
 test_mae_1 = mean_absolute_error(y_valid_original, predictions)
 test_mse_1 = mean_squared_error(y_valid_original, predictions)
 
@@ -723,37 +726,39 @@ model_NN_2.add(Dense(128, input_shape=(X_train_normalized_extra_1.shape[1],), ac
 
 # Hidden layers
 model_NN_2.add(Dense(64, activation='relu'))
+model_NN_2.add(Dropout(0.7))
 
 # Output layer
 model_NN_2.add(Dense(1, activation='linear'))
 
 # Compiling the model
-adam_optimizer = Adam(learning_rate=0.1)
+adam_optimizer = Adam(learning_rate=0.01)
 model_NN_2.compile(optimizer=adam_optimizer, loss='mean_squared_error', metrics=['mae', 'mse'])
 
 # Displaying the model summary
 model_NN_2.summary()
 
-early_stopping = EarlyStopping(monitor='val_loss', patience=3, restore_best_weights=True)
-
 # Training the model with a validation split
 history = model_NN_2.fit(
     X_train_normalized_extra_1, y_train_normalized_extra_1,
-    epochs=100,
-    batch_size=10,
+    epochs=500,
+    batch_size=32,
     validation_split=0.20,
-    callbacks=[early_stopping]
+    shuffle=False
 )
 
 normalized_predictions = model_NN_2.predict(X_train_normalized_extra_1)
 
-# Inverse transform predictions and validation labels
+# Inverse transforming predictions and validation labels
 predictions = scaler.inverse_transform(normalized_predictions)
 y_valid_original = scaler.inverse_transform(y_train_normalized_extra_1.reshape(-1, 1))
 
-# Calculate MAE and MSE on the original scale
+# Calculating MAE and MSE on the original scale
 training_mae_2 = mean_absolute_error(y_valid_original, predictions)
 training_mse_2 = mean_squared_error(y_valid_original, predictions)
+
+print(f"Mean absolute error: {training_mae_2}")
+print(f"Mean squared error: {training_mse_2}")
 
 
 normalized_predictions = model_NN_2.predict(X_test_normalized_extra_1)
@@ -994,7 +999,7 @@ print(f'R-squared: {r2}')
 X = temp_df_regular.drop(columns=['grade'])  # Features
 y = temp_df_regular['grade']  # Target variable
 
-# Dropping 'code' column before splitting
+# Droppinf 'code' column before splitting
 X = X.drop(columns=['code'])
 
 # Splitting the data into training and testing sets
@@ -1049,7 +1054,7 @@ print(f"Test MSE: {test_mse_5}")
 print(f"Test R2 score: {test_r2_score_2}")
 
 
-# ## Dummy Classifiers
+# ## Dummy Regressors
 
 temp_df_above_70 = temp_df_regular[temp_df_regular["grade"] >= 70]
 
@@ -1109,16 +1114,16 @@ maes = {"Neural Network 1 (W2V vector is excluded)": {"Training": training_mae_1
         "Decision Tree": {"Training": training_mae_3, "Test": test_mae_3},
         "Random Forest": {"Training": training_mae_4, "Test": test_mae_4},
         "XGBoost": {"Training": training_mae_5, "Test": test_mae_5},
-        "Mean (Dummy Classifier)": {"Training": training_mae_6, "Test": test_mae_6},
-        "Median (Dummy Classifier)": {"Training": training_mae_7, "Test": test_mae_7}}
+        "Mean (Dummy Regressor)": {"Training": training_mae_6, "Test": test_mae_6},
+        "Median (Dummy Regressor)": {"Training": training_mae_7, "Test": test_mae_7}}
 
 mses = {"Neural Network 1 (W2V vector is excluded)": {"Training": training_mse_1, "Test":  test_mse_1},
         "Neural Network 2 (W2V vector is included)": {"Training": training_mse_2, "Test": test_mse_2},
         "Decision Tree": {"Training": training_mse_3, "Test": test_mse_3},
         "Random Forest": {"Training": training_mse_4, "Test": test_mse_4},
         "XGBoost": {"Training": training_mse_5, "Test": test_mse_5},
-        "Mean (Dummy Classifier)": {"Training": training_mse_6, "Test": test_mse_6},
-        "Median (Dummy Classifier)": {"Training": training_mse_7, "Test": test_mse_7}}
+        "Mean (Dummy Regressor)": {"Training": training_mse_6, "Test": test_mse_6},
+        "Median (Dummy Regressor)": {"Training": training_mse_7, "Test": test_mse_7}}
 
 
 def plot_metrics(metrics, title):
@@ -1170,4 +1175,53 @@ pprint(maes)
 
 print("MSEs of our models: ")
 pprint(mses)
+
+
+print("Model with the best MAE in training:")
+mae_training_min = 100
+model_name = ""
+for model in maes.keys():
+    if maes[model]["Training"] < mae_training_min:
+        mae_training_min = maes[model]["Training"]
+        model_name = model
+    else:
+        pass
+
+print(model_name)
+
+print("Model with the best MAE in test:")
+mae_test_min = 100
+model_name = ""
+for model in maes.keys():
+    if maes[model]["Test"] < mae_test_min:
+        mae_test_min = maes[model]["Test"]
+        model_name = model
+    else:
+        pass
+
+print(model_name)
+
+print("Model with the best MSE in training:")
+mse_training_min = 100
+model_name = ""
+for model in mses.keys():
+    if mses[model]["Training"] < mse_training_min:
+        mse_training_min = mses[model]["Training"]
+        model_name = model
+    else:
+        pass
+
+print(model_name)
+
+print("Model with the best MSE in test:")
+mse_test_min = 100
+model_name = ""
+for model in mses.keys():
+    if mses[model]["Test"] < mse_test_min:
+        mse_test_min = mses[model]["Test"]
+        model_name = model
+    else:
+        pass
+
+print(model_name)
 
