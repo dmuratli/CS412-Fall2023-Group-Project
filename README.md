@@ -45,12 +45,22 @@ This methodological diversity allowed for a comprehensive evaluation of the stre
 # Results
 
 ## Clustering:
-The clustering plot (Figure 2) displays the distribution of grades in a 2-dimensional space. Each dot represents a conversation, color-coded by the cluster it belongs to. There appears to be a degree of separation between clusters, suggesting that the conversations have some underlying patterns that are related to the grades received. The clustering does not show distinct groupings by grades, indicating that the relationship between conversation features and grades is complex.
+The clustering plot before (Figure 2) and after kNN imputation (Figure 3) displays the distribution of grades in a 2-dimensional space. Each dot represents a conversation, color-coded by the cluster it belongs to. There appears to be a degree of separation between clusters, suggesting that the conversations have some underlying patterns that are related to the grades received. The clustering does not show distinct groupings by grades in either case, indicating that the relationship between conversation features and grades is complex.
 
-[Clustering Plot (Figure 2)]
+![Figure 2: Results of clustering before kNN imputation (outliers and students with empty prompts are dropped)](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/clustering.png?raw=true)
+
+![Figure 3: Results of clustering after kNN imputation](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/clustering_knn.png?raw=true)
 
 ## MAE and MSE Results:
-The MAE and MSE plots before (Figure 3) and after kNN imputation (Figure 3) compare the performance of different models. These include two neural network configurations (with and without word2vec vectors), Decision Tree, Random Forest, XGBoost, and two dummy classifiers (mean and median strategies).
+The MAE and MSE plots before (Figure 4 and 5 respectively) and after kNN imputation (Figure 6 and 7 respectively) compare the performance of different models. These include two neural network configurations (with and without word2vec vectors), Decision Tree, Random Forest, XGBoost, and two dummy classifiers (mean and median strategies).
+
+![Figure 4: MAEs before kNN imputation (outliers and students with empty prompts are dropped)](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/mae.png?raw=true)
+
+![Figure 5: MSEs before kNN imputation (outliers and students with empty prompts are dropped)](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/mse.png?raw=true)
+
+![Figure 6: MAEs after kNN imputation](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/mae_knn.png?raw=true)
+
+![Figure 7: MSEs after kNN imputation](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/mse_knn.png?raw=true)
 
 ### Neural Networks:
 - Contrary to initial expectations, the neural network model that did not include the word2vec vectors performed better, with lower MAE and MSE values. This may indicate that in this specific context, the word2vec vectors did not add valuable information and perhaps introduced noise or overfitting.
@@ -59,6 +69,8 @@ The MAE and MSE plots before (Figure 3) and after kNN imputation (Figure 3) comp
 ### Decision Tree:
 - The Decision Tree shows a notable disparity between training and test errors, with a significantly lower error on the training set. This is indicative of overfitting, where the model captures noise in the training data that does not generalize well to unseen data.
 - Post-kNN imputation, the Decision Tree's performance deteriorates further on the test set, suggesting that the imputation might have introduced complexities that the model is overfitting to even more.
+
+[Figure 8](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/hw.pdf) displays the decision tree in a graphic format.
 
 ### Random Forest:
 - The Random Forest model, which is an ensemble of decision trees, typically reduces overfitting by averaging the results of individual trees. This is observed in the less pronounced gap between training and test errors compared to the single Decision Tree model.
