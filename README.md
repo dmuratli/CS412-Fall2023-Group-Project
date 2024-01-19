@@ -41,3 +41,37 @@ As part of feature engineering, Clustering using the K-Means algorithm was explo
 Two [Neural Network models](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/886d74f408f46c44deaed4f31264850ebf1abcd7/notebook.py#L661C1-L741C1) were constructed, model_NN_1 utilized the original feature set with Word2Vec vectors, and model_NN_2 used the normalized feature set. Both models consisted of an input layer with 128 neurons, a hidden layer with 64 neurons, and an output layer with a sigmoid activation function. Models were compiled using the Adam optimizer with a learning rate of 0.01 and binary crossentropy loss Early stopping was implemented to monitor validation loss during training. Both models were evaluated for test accuracies to explore the predictive capabilities of the dataset using different feature sets.
 
 This methodological diversity allowed for a comprehensive evaluation of the strengths and weaknesses of each approach, leading to an informed selection of the most effective model for accurate regression predictions on the given data.
+
+# Results
+
+## Clustering:
+The clustering plot (Figure 2) displays the distribution of grades in a 2-dimensional space. Each dot represents a conversation, color-coded by the cluster it belongs to. There appears to be a degree of separation between clusters, suggesting that the conversations have some underlying patterns that are related to the grades received. The clustering does not show distinct groupings by grades, indicating that the relationship between conversation features and grades is complex.
+
+[Clustering Plot (Figure 2)]
+
+## MAE and MSE Results:
+The MAE and MSE plots before (Figure 3) and after kNN imputation (Figure 3) compare the performance of different models. These include two neural network configurations (with and without word2vec vectors), Decision Tree, Random Forest, XGBoost, and two dummy classifiers (mean and median strategies).
+
+### Neural Networks:
+- Contrary to initial expectations, the neural network model that did not include the word2vec vectors performed better, with lower MAE and MSE values. This may indicate that in this specific context, the word2vec vectors did not add valuable information and perhaps introduced noise or overfitting.
+- After kNN imputation, the error rates for both neural network configurations increased, reaffirming that the imputation method may not be well-suited to this dataset.
+
+### Decision Tree:
+- The Decision Tree shows a notable disparity between training and test errors, with a significantly lower error on the training set. This is indicative of overfitting, where the model captures noise in the training data that does not generalize well to unseen data.
+- Post-kNN imputation, the Decision Tree's performance deteriorates further on the test set, suggesting that the imputation might have introduced complexities that the model is overfitting to even more.
+
+### Random Forest:
+- The Random Forest model, which is an ensemble of decision trees, typically reduces overfitting by averaging the results of individual trees. This is observed in the less pronounced gap between training and test errors compared to the single Decision Tree model.
+- After kNN imputation, the Random Forest's errors increased, but it still maintained a more stable performance relative to the Decision Tree, which points to its robustness despite the potentially noisy imputed data.
+
+### XGBoost:
+- XGBoost, another ensemble method that builds trees in a sequential manner to correct the errors of the previous trees, usually performs well on structured data. The error rates pre-imputation were competitive, but there is still evidence of overfitting, as seen in the lower training error compared to test error.
+- The increase in error rates after kNN imputation suggests that the sequential improvement strategy of XGBoost might be amplifying the noise introduced by the imputed data, leading to poorer generalization on the test set.
+
+### Dummy Classifiers:
+- The performance of the dummy classifiers is intriguing. These classifiers do not learn from the data; they simply predict the mean or median value of the training set grades. The fact that they perform better than most of the models on the test set is a strong signal.
+- This outcome could suggest several things: the features may not be predictive enough, the models might be too complex and overfitting to the training data, or the kNN imputation could have introduced misleading information, leading to a degradation in model performance.
+- The dummy classifiers serving as a better predictor than more sophisticated models on the test set is a critical finding. It implies that most of the models (with the neural networks being the only exception) are not capturing the underlying patterns in the data effectively and are instead learning from noise. 
+
+In conclusion, the results suggest that the neural network models, particularly when not augmented with word2vec vectors, outperform the other models in predicting homework grades from ChatGPT conversations. It is surprising that kNN imputation seems to have an adverse effect on the performance of all models, as evidenced by increased error rates post-imputation. This could imply that the missing data handled by kNN imputation introduced noise or that the patterns in the imputed data do not align well with the underlying structure of the dataset. It might be beneficial to explore alternative imputation methods or to consider feature selection to improve model performance.
+
