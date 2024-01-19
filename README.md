@@ -28,22 +28,16 @@ Finally, model training is initiated, encompassing Neural Networks, Clustering, 
 
 # Methodology
 
-Our methodology involved a systematic exploration of various machine learning algorithms and outlier treatment strategies to optimize performance in understanding student responses. Five distinct machine learning algorithms were implemented, each meticulously tailored to uncover the nuances of the dataset.
+The methodology employed in this project encompasses a systematic exploration of five distinct machine learning algorithms to discern the most accurate approach. To evaluate the impact of outlier treatment, various experiments were conducted, including dropping detected outliers, utilizing data imputation with KNN, and training models on both approaches. The subsequent sections detail the approach for each algorithm.
 
-### Decision Tree Regression
-The team commenced with a Decision Tree model, employing scikit-learn in Python. A comprehensive grid search over hyperparameters such as criteria, maximum depth, minimum samples split, and maximum leaf nodes was conducted. The resulting Decision Tree was visualized, and its performance evaluated using Mean Squared Error (MSE) and R2 score metrics.
+The model building process commenced with a Decision Tree. Utilizing scikit-learn in Python, a regressor was instantiated with a maximum depth of 10 and squared error as the criterion. The model underwent training on the specified data, followed by hyperparameter tuning through grid search. The resulting decision tree was visualized, and predictions were evaluated based on Mean Squared Error (MSE) and R2 score.
 
-### Random Forest Regression
-Following the Decision Tree, a RandomForestRegressor was implemented with scikit-learn. A grid search over key parameters, including the number of estimators, maximum depth, minimum samples split, and minimum samples leaf, was executed. The optimized model's performance was assessed through MSE, aiming for accurate regression predictions.
+The approach extended to RandomForestRegressor, configuring parameters such as the number of estimators, maximum depth, and minimum samples split. A grid search optimized the model, and predictions on the test set were assessed through MSE. This process aimed to enhance the accuracy of regression predictions.
 
-### XGBoost Regression
-The XGBoost approach was adopted for regression, leveraging the xgboost library. A GridSearchCV optimized hyperparameters such as min_child_weight, gamma, subsample, colsample_bytree, and max_depth. Performance evaluation encompassed metrics like Mean Absolute Error (MAE), MSE, and R-squared.
+Leveraging the xgboost library, an XGBoost approach was implemented with hyperparameter tuning via GridSearchCV. The model's performance was evaluated using metrics like Mean Absolute Error (MAE), MSE, and R-squared, optimizing for accurate regression predictions.
 
-### Clustering with K-Means
-Incorporating clustering into feature engineering, the team utilized the K-Means algorithm. The Elbow Method determined the optimal number of clusters (k), and K-Means clustering was applied to unveil patterns and groupings within the data.
+As part of feature engineering, Clustering using the K-Means algorithm was explored. The Elbow Method guided the determination of the optimal number of clusters. K-Means clustering with the chosen number of clusters (num_clusters = 6) identified patterns within the data, and the resulting dataframe was saved for further analysis.
 
-### Neural Network Models
-Two Neural Network models were constructed, each with a distinct approach. The first, model_NN_1, utilized the original feature set with Word2Vec vectors, while the second, model_NN_2, employed the normalized feature set. Early stopping was implemented during training, and both models were evaluated for test accuracy, probing the predictive capabilities of the dataset using different feature sets.
+Two Neural Network models were constructed—model_NN_1 utilized the original feature set with Word2Vec vectors, and model_NN_2 used the normalized feature set. Both models consisted of an input layer with 128 neurons, a hidden layer with 64 neurons, and an output layer with a sigmoid activation function. Models were compiled using the Adam optimizer with a learning rate of 0.01 and binary crossentropy loss Early stopping was implemented to monitor validation loss during training. Both models were evaluated for test accuracies to explore the predictive capabilities of the dataset using different feature sets.
 
-This multi-faceted methodology aimed to discern the most accurate machine learning algorithm for the project while exploring the impact of outlier treatment strategies on the final results. The iterative optimization process involved fine-tuning hyperparameters, evaluating performance metrics, and considering the distinctive advantages offered by each algorithm. The inclusion of clustering and neural networks provided a comprehensive understanding of the dataset's structure and predictive potential.
-
+This methodological diversity allowed for a comprehensive evaluation of the strengths and weaknesses of each approach, leading to an informed selection of the most effective model for accurate regression predictions on the given data.
