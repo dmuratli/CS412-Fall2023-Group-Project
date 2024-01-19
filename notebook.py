@@ -994,7 +994,7 @@ print(f'R-squared: {r2}')
 X = temp_df_regular.drop(columns=['grade'])  # Features
 y = temp_df_regular['grade']  # Target variable
 
-# Drop 'code' column before splitting
+# Dropping 'code' column before splitting
 X = X.drop(columns=['code'])
 
 # Splitting the data into training and testing sets

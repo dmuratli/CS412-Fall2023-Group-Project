@@ -52,54 +52,62 @@ These dummy models served as simplistic benchmarks, highlighting the importance 
 # Results
 
 ## Clustering:
-The clustering plot before (Figure 2) and after kNN imputation (Figure 3) displays the distribution of grades in a 2-dimensional space. Each dot represents a conversation, color-coded by the cluster it belongs to. There appears to be a degree of separation between clusters, suggesting that the conversations have some underlying patterns that are related to the grades received. The clustering does not show distinct groupings by grades in either case, indicating that the relationship between conversation features and grades is complex.
+The clustering plot without (Figure 2) and with kNN imputation (Figure 3) displays the distribution of grades in a 2-dimensional space. Each dot represents a conversation, color-coded by the cluster it belongs to. There appears to be a degree of separation between clusters, suggesting that the conversations have some underlying patterns that are related to the grades received. The clustering does not show distinct groupings by grades in either case, indicating that the relationship between conversation features and grades is complex.
 
-![Figure 2: Results of clustering before kNN imputation (outliers and students with empty prompts are dropped)](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/clustering.png?raw=true)
-*Figure 2: Results of clustering before kNN imputation (outliers and students with empty prompts are dropped)*
+![Figure 2: Results of clustering without kNN imputation (outliers and students with empty prompts are dropped)](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/clustering.png?raw=true)
+*Figure 2: Results of clustering without kNN imputation (outliers and students with empty prompts are dropped)*
 
-![Figure 3: Results of clustering after kNN imputation](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/clustering_knn.png?raw=true)
-*Figure 3: Results of clustering after kNN imputation*
+![Figure 3: Results of clustering with kNN imputation](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/clustering_knn.png?raw=true)
+*Figure 3: Results of clustering with kNN imputation*
 
 ## MAE and MSE Results:
-The MAE and MSE plots before (Figure 4 and 5 respectively) and after kNN imputation (Figure 6 and 7 respectively) compare the performance of different models. These include two neural network configurations (with and without word2vec vectors), Decision Tree, Random Forest, XGBoost, and two dummy classifiers (mean and median strategies).
+The MAE and MSE plots without (Figure 4 and 5 respectively) and with kNN imputation (Figure 6 and 7 respectively) compare the performance of different models. These include two neural network configurations (with and without word2vec vectors), Decision Tree, Random Forest, XGBoost, and two dummy classifiers (mean and median strategies).
 
-![Figure 4: MAEs before kNN imputation (outliers and students with empty prompts are dropped)](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/mae.png?raw=true)
-*Figure 4: MAEs before kNN imputation (outliers and students with empty prompts are dropped)*
+![Figure 4: MAEs without kNN imputation (outliers and students with empty prompts are dropped)](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/mae.png?raw=true)
+*Figure 4: MAEs without kNN imputation (outliers and students with empty prompts are dropped)*
 
-![Figure 5: MSEs before kNN imputation (outliers and students with empty prompts are dropped)](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/mse.png?raw=true)
-*Figure 5: MSEs before kNN imputation (outliers and students with empty prompts are dropped)*
+![Figure 5: MSEs without kNN imputation (outliers and students with empty prompts are dropped)](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/mse.png?raw=true)
+*Figure 5: MSEs without kNN imputation (outliers and students with empty prompts are dropped)*
 
-![Figure 6: MAEs after kNN imputation](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/mae_knn.png?raw=true)
-*Figure 6: MAEs after kNN imputation*
+![Figure 6: MAEs with kNN imputation](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/mae_knn.png?raw=true)
+*Figure 6: MAEs with kNN imputation*
 
-![Figure 7: MSEs after kNN imputation](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/mse_knn.png?raw=true)
-*Figure 7: MSEs after kNN imputation*
+![Figure 7: MSEs with kNN imputation](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/mse_knn.png?raw=true)
+*Figure 7: MSEs with kNN imputation*
 
 ### Neural Networks:
-- Contrary to initial expectations, the neural network model that did not include the word2vec vectors performed better, with lower MAE and MSE values. This may indicate that in this specific context, the word2vec vectors did not add valuable information and perhaps introduced noise or overfitting.
-- After kNN imputation, the error rates for both neural network configurations increased, reaffirming that the imputation method may not be well-suited to this dataset.
+Through rigorous experimentation, we found that our neural network models, which should ideally outperform more basic algorithms, exhibited highly variable performance. The Mean Absolute Error (MAE) of these models ranged dramatically from rather small single digit numbers to large double digit numbers, indicating a considerable inconsistency in predictions. This variability was not confined to training data; it also extended to test datasets.
+
+Contrary to initial expectations, the neural network model that did not include the word2vec vectors performed better, with lower MAE and MSE values. This may indicate that in this specific context, the word2vec vectors did not add valuable information and perhaps introduced noise or overfitting.
+
+After kNN imputation, the error rates for both neural network configurations increased, demonstrating that the imputation method may not be well-suited to this dataset.
 
 ### Decision Tree:
-- The Decision Tree shows a notable disparity between training and test errors, with a significantly lower error on the training set. This is indicative of overfitting, where the model captures noise in the training data that does not generalize well to unseen data.
-- Post-kNN imputation, the Decision Tree's performance deteriorates further on the test set, suggesting that the imputation might have introduced complexities that the model is overfitting to even more.
+The Decision Tree shows a notable disparity between training and test errors, with a significantly lower error on the training set. This is indicative of overfitting, where the model captures noise in the training data that does not generalize well to unseen data.
+
+Post-kNN imputation, the Decision Tree's performance deteriorates further on the test set, suggesting that the imputation might have introduced complexities that the model is overfitting to even more.
 
 [Figure 8](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/hw.pdf) displays the decision tree in a graphic format.
 
 ### Random Forest:
-- The Random Forest model, which is an ensemble of decision trees, typically reduces overfitting by averaging the results of individual trees. This is observed in the less pronounced gap between training and test errors compared to the single Decision Tree model.
-- After kNN imputation, the Random Forest's errors increased, but it still maintained a more stable performance relative to the Decision Tree, which points to its robustness despite the potentially noisy imputed data.
+The Random Forest model, which is an ensemble of decision trees, typically reduces overfitting by averaging the results of individual trees. This is observed in the less pronounced gap between training and test errors compared to the single Decision Tree model.
+
+After kNN imputation, the Random Forest's errors increased, but it still maintained a more stable performance relative to the Decision Tree, which points to its robustness despite the potentially noisy imputed data.
 
 ### XGBoost:
-- XGBoost, another ensemble method that builds trees in a sequential manner to correct the errors of the previous trees, usually performs well on structured data. The error rates pre-imputation were competitive, but there is still evidence of overfitting, as seen in the lower training error compared to test error.
-- The increase in error rates after kNN imputation suggests that the sequential improvement strategy of XGBoost might be amplifying the noise introduced by the imputed data, leading to poorer generalization on the test set.
+XGBoost, another ensemble method that builds trees in a sequential manner to correct the errors of the previous trees, usually performs well on structured data. The error rates pre-imputation were competitive, but there is still evidence of overfitting, as seen in the lower training error compared to test error.
+
+The increase in error rates after kNN imputation suggests that the sequential improvement strategy of XGBoost might be amplifying the noise introduced by the imputed data, leading to poorer generalization on the test set.
 
 ### Dummy Classifiers:
-- The performance of the dummy classifiers is intriguing. These classifiers do not learn from the data; they simply predict the mean or median value of the training set grades. The fact that they perform better than most of the models on the test set is a strong signal.
-- This outcome could suggest several things: the features may not be predictive enough, the models might be too complex and overfitting to the training data, or the kNN imputation could have introduced misleading information, leading to a degradation in model performance.
-- The dummy classifiers serving as a better predictor than more sophisticated models on the test set is a critical finding. It implies that most of the models (with the neural networks being the only exception) are not capturing the underlying patterns in the data effectively and are instead learning from noise. 
+The performance of the dummy classifiers is intriguing. These classifiers do not learn from the data; they simply predict the mean or median value of the training set grades. The fact that they perform better than most of the models on the test set is a strong signal.
 
-In conclusion, the results suggest that the neural network models, particularly when not augmented with word2vec vectors, outperform the other models in predicting homework grades from ChatGPT conversations. It is surprising that kNN imputation seems to have an adverse effect on the performance of all models, as evidenced by increased error rates post-imputation. This could imply that the missing data handled by kNN imputation introduced noise or that the patterns in the imputed data do not align well with the underlying structure of the dataset. It might be beneficial to explore alternative imputation methods or to consider feature selection to improve model performance.
+Typically, one expects complex models like neural networks to outperform simple heuristics. However, in this case, the dummy classifiers exhibited lower MAE and Mean Squared Error (MSE) on the test data compared to more sophisticated models, particularly after kNN imputation. It implies that none of the models are capturing the underlying patterns in the data effectively and are instead learning from noise.
+
+This outcome could suggest several things: the features may not be predictive enough, the models might be too complex and overfitting to the training data, or the kNN imputation could have introduced misleading information, leading to a degradation in model performance.
+
+## Conclusion
+In conclusion, the results of our machine learning project underline the challenges in predicting homework scores based on ChatGPT conversations. The variability in MAE and MSE, particularly for models expected to perform with higher accuracy, prompts a re-evaluation of our approach. It encourages us to explore more robust feature engineering, alternative imputation methods, or different model architectures that might be more adept at capturing the complex patterns (e.g. the skewed distribution of scores) inherent in our data.
 
 # Team Contributions
-
 The team collaboratively discussed the project's initial steps and distributed tasks during meetings. Working together, the team focused on preprocessing, matching prompts with questions, and TF-IDF vectorization, utilizing code provided by the CS412 team. Hasan and Sude worked on the Outlier Treatment, exploring alternative approaches such as k-nn filling and dropping. Deniz took charge of Word2Vec vectorization and Normalization using MinMaxScaling. Melis was responsible for Feature Engineering, experimenting with different wordings for feature extraction, including GPT responses such as apologies or assessing if the student provided context to GPT.  Betül explored alternative approaches for feature selection. Following these tasks, the team gathered to discuss further steps, implementing multiple models for comparison and aiming for a more accurate method. Hasan and Betül collaborated on building Decision Tree, Random Forest, and XGBoost models, assessing MSE results. Deniz constructed a Neural Network (NN) model and teamed up with Sude on Clustering. Melis helped with the visualization of outcomes of model predictions, closely working with Deniz. Lastly, all team members cooperated in editing the repository and code flow, as well as contributing to the readme file.
