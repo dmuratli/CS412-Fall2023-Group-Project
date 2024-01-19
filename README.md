@@ -48,24 +48,25 @@ This methodological diversity allowed for a comprehensive evaluation of the stre
 The clustering plot before (Figure 2) and after kNN imputation (Figure 3) displays the distribution of grades in a 2-dimensional space. Each dot represents a conversation, color-coded by the cluster it belongs to. There appears to be a degree of separation between clusters, suggesting that the conversations have some underlying patterns that are related to the grades received. The clustering does not show distinct groupings by grades in either case, indicating that the relationship between conversation features and grades is complex.
 
 ![Figure 2: Results of clustering before kNN imputation (outliers and students with empty prompts are dropped)](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/clustering.png?raw=true)
-*Caption: Results of clustering before kNN imputation (outliers and students with empty prompts are dropped)*
+*Figure 2: Results of clustering before kNN imputation (outliers and students with empty prompts are dropped)*
 
 ![Figure 3: Results of clustering after kNN imputation](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/clustering_knn.png?raw=true)
+*Figure 3: Results of clustering after kNN imputation*
 
 ## MAE and MSE Results:
 The MAE and MSE plots before (Figure 4 and 5 respectively) and after kNN imputation (Figure 6 and 7 respectively) compare the performance of different models. These include two neural network configurations (with and without word2vec vectors), Decision Tree, Random Forest, XGBoost, and two dummy classifiers (mean and median strategies).
 
 ![Figure 4: MAEs before kNN imputation (outliers and students with empty prompts are dropped)](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/mae.png?raw=true)
-*Caption: MAEs before kNN imputation (outliers and students with empty prompts are dropped)*
+*Figure 4: MAEs before kNN imputation (outliers and students with empty prompts are dropped)*
 
 ![Figure 5: MSEs before kNN imputation (outliers and students with empty prompts are dropped)](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/mse.png?raw=true)
-*Caption: MSEs before kNN imputation (outliers and students with empty prompts are dropped)*
+*Figure 5: MSEs before kNN imputation (outliers and students with empty prompts are dropped)*
 
 ![Figure 6: MAEs after kNN imputation](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/mae_knn.png?raw=true)
-*Caption: MAEs after kNN imputation*
+*Figure 6: MAEs after kNN imputation*
 
 ![Figure 7: MSEs after kNN imputation](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/main/Figures/mse_knn.png?raw=true)
-*Caption: MSEs after kNN imputation*
+*Figure 7: MSEs after kNN imputation*
 
 ### Neural Networks:
 - Contrary to initial expectations, the neural network model that did not include the word2vec vectors performed better, with lower MAE and MSE values. This may indicate that in this specific context, the word2vec vectors did not add valuable information and perhaps introduced noise or overfitting.
