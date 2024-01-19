@@ -28,7 +28,7 @@ Finally, model training is initiated, encompassing Neural Networks, Clustering, 
 
 # Methodology
 
-The methodology employed in this project encompasses a systematic exploration of five distinct machine learning algorithms to discern the most accurate approach. To evaluate the impact of outlier treatment, various experiments were conducted, including dropping detected outliers, utilizing data imputation with KNN, and training models on both approaches. The subsequent sections detail the approach for each algorithm.
+The methodology employed in this project encompasses a systematic exploration of five distinct machine learning algorithms to discern the most accurate approach. To evaluate the impact of outlier treatment, various experiments were conducted, including dropping detected outliers, utilizing data imputation with KNN, and training models on both approaches.
 
 The model building process commenced with a Decision Tree. Utilizing scikit-learn in Python, a regressor was instantiated with a maximum depth of 10 and squared error as the criterion. The model underwent training on the specified data, followed by hyperparameter tuning through grid search. The resulting decision tree was visualized, and predictions were evaluated based on Mean Squared Error (MSE) and R2 score.
 
@@ -38,6 +38,6 @@ Leveraging the xgboost library, an XGBoost approach was implemented with hyperpa
 
 As part of feature engineering, Clustering using the K-Means algorithm was explored. The Elbow Method guided the determination of the optimal number of clusters. K-Means clustering with the chosen number of clusters (num_clusters = 6) identified patterns within the data, and the resulting dataframe was saved for further analysis.
 
-Two Neural Network models were constructed, model_NN_1 utilized the original feature set with Word2Vec vectors, and model_NN_2 used the normalized feature set. Both models consisted of an input layer with 128 neurons, a hidden layer with 64 neurons, and an output layer with a sigmoid activation function. Models were compiled using the Adam optimizer with a learning rate of 0.01 and binary crossentropy loss Early stopping was implemented to monitor validation loss during training. Both models were evaluated for test accuracies to explore the predictive capabilities of the dataset using different feature sets.
+Two [Neural Network models](https://github.com/dmuratli/CS412-Fall2023-Group-Project/blob/886d74f408f46c44deaed4f31264850ebf1abcd7/notebook.py#L661C1-L741C1) were constructed, model_NN_1 utilized the original feature set with Word2Vec vectors, and model_NN_2 used the normalized feature set. Both models consisted of an input layer with 128 neurons, a hidden layer with 64 neurons, and an output layer with a sigmoid activation function. Models were compiled using the Adam optimizer with a learning rate of 0.01 and binary crossentropy loss Early stopping was implemented to monitor validation loss during training. Both models were evaluated for test accuracies to explore the predictive capabilities of the dataset using different feature sets.
 
 This methodological diversity allowed for a comprehensive evaluation of the strengths and weaknesses of each approach, leading to an informed selection of the most effective model for accurate regression predictions on the given data.
