@@ -630,8 +630,8 @@ print(X_normalized.shape, y_normalized.shape)
 
 
 X_normalized_extra_1 = temp_df_normalized_extra_1[temp_df_normalized_extra_1.columns[1:-1]].to_numpy()
-y_normalized_extra_2 = temp_df_normalized_extra_1["grade"].to_numpy()
-print(X_normalized_extra_1.shape, y_normalized_extra_2.shape)
+y_normalized_extra_1 = temp_df_normalized_extra_1["grade"].to_numpy()
+print(X_normalized_extra_1.shape, y_normalized_extra_1.shape)
 
 
 # #### Train/Test split
@@ -651,7 +651,7 @@ print("Train set size:", len(X_train_normalized))
 print("Test set size:", len(X_test_normalized))
 
 
-X_train_normalized_extra_1, X_test_normalized_extra_1, y_train_normalized_extra_1, y_test_normalized_extra_1 = train_test_split(X_normalized_extra_1, y_normalized_extra_2, test_size=0.2, random_state=42)
+X_train_normalized_extra_1, X_test_normalized_extra_1, y_train_normalized_extra_1, y_test_normalized_extra_1 = train_test_split(X_normalized_extra_1, y_normalized_extra_1, test_size=0.2, random_state=42)
 print("Train set size:", len(X_train_normalized_extra_1))
 print("Test set size:", len(X_test_normalized_extra_1))
 
@@ -670,11 +670,11 @@ model_NN_1.add(Dense(128, input_shape=(X_train_normalized.shape[1],), activation
 model_NN_1.add(Dense(64, activation='relu'))
 
 # Output layer
-model_NN_1.add(Dense(1, activation='sigmoid'))
+model_NN_1.add(Dense(1, activation='linear'))
 
 # Compiling the model
-adam_optimizer = Adam(learning_rate=0.01)
-model_NN_1.compile(optimizer=adam_optimizer, loss='binary_crossentropy', metrics=['mae', 'mse'])
+adam_optimizer = Adam(learning_rate=0.1)
+model_NN_1.compile(optimizer=adam_optimizer, loss='mean_squared_error', metrics=['mae', 'mse'])
 
 # Displaying the model summary
 model_NN_1.summary()
@@ -690,11 +690,26 @@ history = model_NN_1.fit(
     callbacks=[early_stopping]
 )
 
-training_mae_1 = history.history['mae'][-1]
-training_mse_1 = history.history['mse'][-1]
+normalized_predictions = model_NN_1.predict(X_train_normalized)
+
+# Inverse transform predictions and validation labels
+predictions = scaler.inverse_transform(normalized_predictions)
+y_valid_original = scaler.inverse_transform(y_train_normalized.reshape(-1, 1))
+
+# Calculate MAE and MSE on the original scale
+training_mae_1 = mean_absolute_error(y_valid_original, predictions)
+training_mse_1 = mean_squared_error(y_valid_original, predictions)
 
 
-test_loss_1, test_mae_1, test_mse_1 = model_NN_1.evaluate(X_test_normalized, y_test_normalized)
+normalized_predictions = model_NN_1.predict(X_test_normalized)
+
+# Inverse transform predictions and validation labels
+predictions = scaler.inverse_transform(normalized_predictions)
+y_valid_original = scaler.inverse_transform(y_test_normalized.reshape(-1, 1))
+
+# Calculate MAE and MSE on the original scale
+test_mae_1 = mean_absolute_error(y_valid_original, predictions)
+test_mse_1 = mean_squared_error(y_valid_original, predictions)
 
 print(f"Mean absolute error: {test_mae_1}")
 print(f"Mean squared error: {test_mse_1}")
@@ -710,11 +725,11 @@ model_NN_2.add(Dense(128, input_shape=(X_train_normalized_extra_1.shape[1],), ac
 model_NN_2.add(Dense(64, activation='relu'))
 
 # Output layer
-model_NN_2.add(Dense(1, activation='sigmoid'))
+model_NN_2.add(Dense(1, activation='linear'))
 
 # Compiling the model
-adam_optimizer = Adam(learning_rate=0.01)
-model_NN_2.compile(optimizer=adam_optimizer, loss='binary_crossentropy', metrics=['mae', 'mse'])
+adam_optimizer = Adam(learning_rate=0.1)
+model_NN_2.compile(optimizer=adam_optimizer, loss='mean_squared_error', metrics=['mae', 'mse'])
 
 # Displaying the model summary
 model_NN_2.summary()
@@ -730,11 +745,26 @@ history = model_NN_2.fit(
     callbacks=[early_stopping]
 )
 
-training_mae_2 = history.history['mae'][-1]
-training_mse_2 = history.history['mse'][-1]
+normalized_predictions = model_NN_2.predict(X_train_normalized_extra_1)
+
+# Inverse transform predictions and validation labels
+predictions = scaler.inverse_transform(normalized_predictions)
+y_valid_original = scaler.inverse_transform(y_train_normalized_extra_1.reshape(-1, 1))
+
+# Calculate MAE and MSE on the original scale
+training_mae_2 = mean_absolute_error(y_valid_original, predictions)
+training_mse_2 = mean_squared_error(y_valid_original, predictions)
 
 
-test_loss_2, test_mae_2, test_mse_2 = model_NN_2.evaluate(X_test_normalized_extra_1, y_test_normalized_extra_1)
+normalized_predictions = model_NN_2.predict(X_test_normalized_extra_1)
+
+# Inverse transforming predictions and validation labels
+predictions = scaler.inverse_transform(normalized_predictions)
+y_valid_original = scaler.inverse_transform(y_test_normalized_extra_1.reshape(-1, 1))
+
+# Calculating MAE and MSE on the original scale
+test_mae_2 = mean_absolute_error(y_valid_original, predictions)
+test_mse_2 = mean_squared_error(y_valid_original, predictions)
 
 print(f"Mean absolute error: {test_mae_2}")
 print(f"Mean squared error: {test_mse_2}")
